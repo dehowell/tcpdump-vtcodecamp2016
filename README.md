@@ -1,5 +1,11 @@
 # tcpdump-vtcodecamp2016
+
 Presentation materials, example data, and code for the Vermont Code Camp talk "Seeing the Matrix with tcpdump".
+
+
+## TODO:
+
+- [ ] Figure out how to use [`reveal.js`](https://github.com/jgm/pandoc/wiki/Using-pandoc-to-produce-reveal.js-slides)!
 
 ----
 
