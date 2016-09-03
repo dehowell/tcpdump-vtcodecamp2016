@@ -1,20 +1,25 @@
 # Seeing the Matrix
-## (with tcpdump and friends)
+## (with **tcpdump** and **friends**)
 
 Vermont Code Camp, Sep. 17 2016
-David Howell
+David Howell (**@dehowell** on )
+
+
+
 
 ---
 
 # Who Am I?
 
-Technical Lead at Dealer.com
+* Technical Lead at Dealer.com
+
+
 
 ^I work on our real-time bidding system, participate in auctions to buy display advertising opportunities. We get hundreds of thousands of bid requests per second and have to respond in less than 100 ms. So we very much care about network performance!
 
 ---
 
-# Familiar Protocols
+# Familiar **Protocols**
 
 HTTP(S)
 MySQL
@@ -415,9 +420,6 @@ Diagrams from Wikipedia, the TCP/IP Guide (www.tcpipguide.com), High Performance
 
 ---
 
-I'm `@dehowell` on both Twitter and GitHub.
-
-http://www.howell.io
-
-Resources for this presentation are on GitHub.  
-[dehowell/tcpdump-vtcodecamp2016](https://github.com/dehowell/tcpdump-vtcodecamp2016)
+I'm **@dehowell** on both Twitter and GitHub.
+  
+[github.com/dehowell/tcpdump-vtcodecamp2016](https://github.com/dehowell/tcpdump-vtcodecamp2016)
