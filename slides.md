@@ -2,24 +2,34 @@
 ## (with **tcpdump** and **friends**)
 
 Vermont Code Camp, Sep. 17 2016
-David Howell (**@dehowell** on )
-
-
-
+David Howell
+**@dehowell** on ![inline](images/twitter.png) and ![inline](images/github.png)
 
 ---
 
-# Who Am I?
+# [fit] Who Am I?
 
-* Technical Lead at Dealer.com
+## Technical Lead at **Dealer.com**
 
+### I work on a **real-time bidding** system that gets **hundreds of thousands** of requests per second and has to respond in less than **100 milliseconds**.
 
-
-^I work on our real-time bidding system, participate in auctions to buy display advertising opportunities. We get hundreds of thousands of bid requests per second and have to respond in less than 100 ms. So we very much care about network performance!
+^At our scale, all kinds of things can have weird consequences - including the networking stack.
 
 ---
 
-# Familiar **Protocols**
+# [fit] **Protocols**
+
+> a **communication protocol** is a system of rules that allow two or more entities of a communications system to transmit information via any kind of variation of a physical quantity.[^1]
+
+
+
+[^1]: "[Communications protocol](https://en.wikipedia.org/wiki/Communications_protocol)". *Wikipedia: the Online Encyclopedia.*
+
+^We have protocols because we need to agree on how we interpret the changing voltage on a wire as a signal.
+
+---
+
+# [fit] Application **Protocols**
 
 HTTP(S)
 MySQL
@@ -27,44 +37,46 @@ MongoDB
 AMQP (RabbitMQ)
 SSH
 
-^Here are some protocols you have probably heard of. These are all application layer protocols and all of them are built on top of TCP.
+^These are some protocols that you have probably encountered, which all define some kind of request and response formats between a client and a server.
+
+^They don't handle _machine addresses_. They assume that their messages arrive intact, with no missing pieces or errors, regardless of length. They can just say "This chunk of bits is a message! Here ya go!" and trust.
 
 ---
 
-# Transmission Control Protocol
+# **T**ransmission
+# **C**ontrol
+# **P**rotocol
 
-^These protocols don't handle reliability, ordering, error checking on other concerns generic to "sending an ordered stream of bytes over a wire" themselves. Instead, they rely on TCP, the transport layer protocol.
+^They get those features by virtue of being built on top of TCP.
 
-^Most of the time, we get to ignore TCP and just deal with the higher levels. But sometimes, you might find that your application starts acting wacky, but you can't tell from the logs, performance metrics look fine in Graphite, and you're ready to rip your hair out.
+^TCP handles chunking bits into _packets_, ordering the packets, doing checksums to catch errors, and all the messy details of keeping the abstraction clean for the application protocol.
 
----
-
-> "Is something wrong with the network?"
-
-
-^How many people have ever asked a systems engineer this question? And how many systems engineers have been asked this question in a context where it was too vague to be meaningful?
-
-^Just learning a little bit about this stuff goes a long towards being able to ask better questions and debug faster. I'm going to alternate between a little bit of TCP theory and little bit on on working with some networking tools.
-
-^But first, here are some example situations I've been in where knowing how to analyze TCP traffic could have helped out.
+^When we're lucky, we use web servers and libraries that deal with TCP and everything just works! But then there are other times...
 
 ---
 
-My metrics say my app is fast, but the client says my app is slow!
+> **Umm,** is something wrong with the network?
+-- Me, grasping at straws while troubleshooting **production issues**.
 
-^This happened in the RTB bidder last year, where we didn't have enough Jetty threads and packets were queueing in the Linux networking stack for 50 ms waiting for an acceptor thread to become available.
+^I got tired of asking this hand-wavey question and feeling like a ding-dong. I'm far from an expert, but learning the basics of network troubleshooting has helped me ask way better questions of the systems engineers I work with and get to the bottom of issues faster.
 
----
-
-Why did Solr get so slow?
-
-^There was a CMS release a couple of years ago that unintentionally switched from Solr's binary protocol to their XML protocol - which is much slower. We finally found it by noticing that the total data volume flowing between CMS and Solr had gotten much higher. Thanks, XML!
+^My goal today is to teach you just enough TCP theory and some practical tools so that you can do the same.
 
 ---
 
-Coherence Oh God Why Oh Why Are You Doing That
+# Graphite says my app is **fast**, but a client say that it's **slow**!
 
-^Technically, Coherence does a lot of its stuff with UDP, but tcpdump can still be used to capture UDP traffic, so some of the same techniques apply.
+^Most libraries that provide response timing for web applications start their timers only after a complete HTTP request has made it into your code.
+
+^But the TCP packets that make up the request can be queued in your operating system for a long time before that ever happens!
+
+---
+
+# Why did **Solr** get so slow?
+
+^At Dealer.com, we use Apache Solr for full-text search over vehicles on our dealership sites. We had a release that unintentionally switched our Solr client from using binary serialization to XML.
+
+^It wasn't obvious from looking at the diff of what changed in the code, but the volume of network traffic jumped substantially for the same number of requests -- XML is big. Would have been totally obvious if we looked at TCP packets.
 
 ---
 
