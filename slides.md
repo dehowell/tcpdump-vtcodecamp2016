@@ -72,7 +72,7 @@ SSH
 
 ---
 
-# Why did **Solr** get so slow?
+# Why did Solr get so **slow**?
 
 ^At Dealer.com, we use Apache Solr for full-text search over vehicles on our dealership sites. We had a release that unintentionally switched our Solr client from using binary serialization to XML.
 
@@ -82,27 +82,21 @@ SSH
 
 # What is a TCP connection made of?
 
----
+![inline](images/socket.png)
 
-# What is a TCP connection made of?
-
-- client
-- server
-- packets exchanged between them
-- buffers for incoming / outgoing packets in the OS
-- data structures for the connection state
+^Well, there are two sides to the connection - the client and the server. On each side, there's a socket, managed by the TCP stack in the operating system. For each port, the OS manages the send and receive buffers for incoming and outgoing packets, and there is _state_ for managing the connection. To the process using the socket, those buffers are its input and output streams.
 
 ---
 
-![fit](images/sockets.pdf)
+# [fit] Addresses
 
-^Here's an example of two halves from a TCP connection, which I pulled from one of our RTB ad servers.
+## client `10.0.1.10.58012`
 
-^On the left we have the server and on the right the client.
+## server `108.160.172.206:443`
 
-^"socket", which is the combination of an IP address (location of the machine) and a port (location of the service on the machine).
+^This is what the addresses look like - in TCP conns, we have both the IP address and the port. These are the two halves of a Dropbox connection from my laptop.
 
-^Servers are expected to listen on standard ports - the so called "well known address" for the service. 8080 is a fairly standard choice for HTTP services internal to a data center. Ports up to 1024 are "privileged" and require root access for the process that listens on the port, so we typically run our applications on higher ports as a non-root user.
+^Servers are expected to listen on standard ports - the so called "well known address" for the service. 8080 is a fairly standard choice for HTTP services internal to a data center.
 
 ^The client side needs to have a port open as well, so that the server has an address to send responses to. The client side port is open for the duration of the connection and is allocated out of a pool of unused high ports.
 
