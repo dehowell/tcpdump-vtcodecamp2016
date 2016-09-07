@@ -7,6 +7,12 @@ David Howell
 
 ---
 
+![](images/tcpdump.mov)
+
+^This is tcpdump in action - it's where we're headed today.
+
+---
+
 # [fit] Who Am I?
 
 ## Technical Lead at **Dealer.com**
