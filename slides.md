@@ -102,7 +102,7 @@ SSH
 
 ---
 
-![fit](images/tcp_states.png)
+![fit](images/tcp_flow.png)
 
 
 ^This is a flow chart of the TCP state machine, stolen from Wikipedia.
@@ -427,5 +427,5 @@ Diagrams from Wikipedia, the TCP/IP Guide (www.tcpipguide.com), High Performance
 ---
 
 I'm **@dehowell** on both Twitter and GitHub.
-  
+
 [github.com/dehowell/tcpdump-vtcodecamp2016](https://github.com/dehowell/tcpdump-vtcodecamp2016)
