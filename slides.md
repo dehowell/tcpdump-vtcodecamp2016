@@ -7,6 +7,12 @@ David Howell
 
 ---
 
+![](images/tcpdump.mov)
+
+^This is tcpdump in action - it's where we're headed today.
+
+---
+
 # [fit] Who Am I?
 
 ## Technical Lead at **Dealer.com**
@@ -104,10 +110,9 @@ SSH
 
 ![fit](images/tcp_flow.png)
 
+^This is the state machine that governs TCP connections - the OS keeps track of the connection state and manages transitions. Most of the time should be spent in ESTABLISHED - that's where the application protocol can get its work done. I'll refer back to this later, but I wanted to take a quick look at it now.
 
-^This is a flow chart of the TCP state machine, stolen from Wikipedia.
-
-^When a connection is opened, both the client and the server have to allocate data structures for their ends, to keep track of the position in the state machine and for buffers for both incoming packets and outgoing packets.
+^The red paths are the client transitions and the blue are for the server... time goes from top to bottom in this picture.
 
 ---
 
@@ -137,16 +142,16 @@ ESTAB      0      0               10.16.48.53:36555       204.152.51.176:3306
 
 ![fit](images/bidder_connections.png)
 
-^Some servers have summaries of this stuff piped into Graphite via collectd. For example, we have these on the RTB bidder servers because we've had problems in the past with one of the ad exchanges constantly opening new connections and closing down the old connections uncleanly.
+^At Dealer.com, we use a plugin for collectd to scrape summaries of socket states and pipe it into Graphite. It can be really helpful to see time-series of connection states - especially because each connection also consumes a UNIX file handle, and there are a finite number of those available per process! A misbehaving client can burn through sockets on your server in a denial of service attack.
 
 ---
 
-# TCP States
+# [fit] TCP States
 
-LISTEN
-ESTABLISHED
-CLOSE-WAIT
-TIME-WAIT
+**LISTEN**
+**ESTABLISHED**
+**CLOSE-WAIT**
+**TIME-WAIT**
 
 ^LISTEN: waiting for a connection to start
 ^ESTABLISHED: let's get some work done
