@@ -116,7 +116,7 @@ SSH
 
 ---
 
-# ss and netstat
+# **ss** and **netstat**
 
 ^Let's get into some practical stuff. ss and netstat are both tools that you can use to inspect those data structures on your OS.
 
@@ -161,7 +161,7 @@ ESTAB      0      0               10.16.48.53:36555       204.152.51.176:3306
 ---
 
 
-# What's in a TCP packet?
+# What's in a TCP **packet?**
 
 ^Now it's time to dig into the contents of individual packets.
 
