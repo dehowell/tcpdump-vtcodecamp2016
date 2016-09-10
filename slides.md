@@ -62,7 +62,7 @@ SSH
 ---
 
 > **Umm,** is something wrong with the network?
--- Me, grasping at straws while troubleshooting **production issues**.
+-- Me, grasping at straws while troubleshooting **production issues.**
 
 ^I got tired of asking this hand-wavey question and feeling like a ding-dong. I'm far from an expert, but learning the basics of network troubleshooting has helped me ask way better questions of the systems engineers I work with and get to the bottom of issues faster.
 
@@ -70,7 +70,7 @@ SSH
 
 ---
 
-# Graphite says my app is **fast**, but a client say that it's **slow**!
+# Graphite says my app is **fast**, but a client say that it's **slow!**
 
 ^Most libraries that provide response timing for web applications start their timers only after a complete HTTP request has made it into your code.
 
@@ -78,7 +78,7 @@ SSH
 
 ---
 
-# Why did Solr get so **slow**?
+# Why did Solr get so **slow?**
 
 ^At Dealer.com, we use Apache Solr for full-text search over vehicles on our dealership sites. We had a release that unintentionally switched our Solr client from using binary serialization to XML.
 
@@ -96,7 +96,7 @@ SSH
 
 # [fit] Addresses
 
-## client `10.0.1.10.58012`
+## client `10.0.1.10:58012`
 
 ## server `108.160.172.206:443`
 
@@ -146,7 +146,7 @@ ESTAB      0      0               10.16.48.53:36555       204.152.51.176:3306
 
 ---
 
-# [fit] TCP States
+# [fit] **TCP** States
 
 **LISTEN**
 **ESTABLISHED**
@@ -167,7 +167,7 @@ ESTAB      0      0               10.16.48.53:36555       204.152.51.176:3306
 
 ---
 
-![left fit](images/tcpsegmentformat.png)
+![left fit](images/tcp_packet.png)
 
 # TCP Packet Layout
 
@@ -186,7 +186,9 @@ ESTAB      0      0               10.16.48.53:36555       204.152.51.176:3306
 
 ---
 
-# Opening a Connection
+# Opening a Connection[^2]
+
+[^2]: Diagram from _High Performance Browser Networking_.
 
 ![right fit](images/handshake.png)
 
@@ -194,9 +196,10 @@ ESTAB      0      0               10.16.48.53:36555       204.152.51.176:3306
 ^WALK THROUGH DIAGRAM
 ^"Now the client and server agree on their sequence numbers and can proceed with application data"
 
+
 ---
 
-# tcpdump
+# **tcpdump**
 
 ```
 $ sudo tcpdump -i any -c 10000 -w cms.pcap
@@ -308,7 +311,7 @@ $ tcpdump -r cms.pcap -XSnn 'port 61667'
 
 ---
 
-# tshark
+# **tshark**
 
 ```
 $ brew install wireshark
@@ -385,22 +388,12 @@ $ tshark -r ads.pcap -Y 'http.response' -T fields \
 
 ---
 
-```r
-> times <- scan(pipe("tshark -r ads.pcap -Y 'http.response' -T fields -e http.time"))
-Read 487 items
-> quantile(times, c(0.50, 0.75, 0.95, 0.99))
-       50%        75%        95%        99%
-0.00042800 0.00062300 0.00291810 0.03869814
-```
 
-^I like using R for data analysis, especially because I can just read data straight off stdout of some process.
+![left](images/tshark_a01.png)
 
----
+![right](images/tshark_a02.png)
 
-
-[tshark Display Filter Reference](https://www.wireshark.org/docs/dfref/)
-
-^Go to the display filter reference and show all the protocols tshark knows.
+^Go to Wireshark web site, you can see all the protocols that tshark knows. These are just the A's - it's pretty great.
 
 ---
 
@@ -413,24 +406,22 @@ Read 487 items
 
 # Resources
 
-[The TCP/IP Guide](http://www.tcpipguide.com)
+[**Julia Evans:** "tcpdump is amazing" at jvns.ca](http://jvns.ca/blog/2016/03/16/tcpdump-is-amazing/)
 
-[High Performance Browser Networking](http://chimera.labs.oreilly.com/books/1230000000545/index.html)
+[_High Performance Browser Networking_](http://chimera.labs.oreilly.com/books/1230000000545/index.html)
 
-[Daniel Miessler: A tcpdump Primer With Examples](https://danielmiessler.com/study/tcpdump/)
+[**Daniel Miessler:** "A tcpdump Primer With Examples" at danielmiessler.com](https://danielmiessler.com/study/tcpdump/)
 
-[Julia Evans: tcpdump is amazing](http://jvns.ca/blog/2016/03/16/tcpdump-is-amazing/)
-
-[https://pinboard.in/u:dehowell/t:tcp](https://pinboard.in/u:dehowell/t:tcp)
+[**The TCP/IP Guide** at www.tcpipguide.com](http://www.tcpipguide.com)
 
 ---
 
-# Attribution
+![fit](images/debugging-tools-cover.png)
 
-Diagrams from Wikipedia, the TCP/IP Guide (www.tcpipguide.com), High Performance Browser Networking (by Ilya Grigorik).
+^Julia Evans has also recently released a Creative Commons zine all about debugging tools on Linux. I've got some copies up front, so come grab one if you'd like to learn more - and if I run out, it's freely available online.
 
 ---
 
-I'm **@dehowell** on both Twitter and GitHub.
+**@dehowell** on ![inline](images/twitter.png) and ![inline](images/github.png)
 
 [github.com/dehowell/tcpdump-vtcodecamp2016](https://github.com/dehowell/tcpdump-vtcodecamp2016)
