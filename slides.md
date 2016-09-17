@@ -256,7 +256,7 @@ $ tcpdump -r cms.pcap -Snn 'port 61667'
 
 ^So here I'm telling tcpdump to read from a pcap file, which is why I don't need sudo. The `-nn` suppresses hostname and port resolution which speeds up the printing. The `-S` means "show me the full sequence numbers" - without it, the seq/ack numbers are shown relative to the random values chosen at the start of the connection. Finally the bit in quotes is called a "pcap filter" - this particular filter means "only show packets that involve port 61667".
 
-^I'm going to pick out just one TCP connection from this file so I can show the handshake. Also this pcap file is in the github repo for the talk, so you can try this yourself if you like.
+^I'm going to pick out just one TCP connection from this file so I can show the handshake.
 
 ---
 
