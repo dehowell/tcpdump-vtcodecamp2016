@@ -19,15 +19,13 @@ David Howell
 
 ### I work on a **real-time bidding** system that gets **hundreds of thousands** of requests per second and has to respond in less than **100 milliseconds**.
 
-^At our scale, all kinds of things can have weird consequences - including the networking stack.
+^That's not much time to work with, and at that scale the network can get weird fast.
 
 ---
 
 # [fit] **Protocols**
 
 > a **communication protocol** is a system of rules that allow two or more entities of a communications system to transmit information via any kind of variation of a physical quantity.[^1]
-
-
 
 [^1]: "[Communications protocol](https://en.wikipedia.org/wiki/Communications_protocol)". *Wikipedia: the Online Encyclopedia.*
 
@@ -58,6 +56,12 @@ SSH
 ^TCP handles chunking bits into _packets_, ordering the packets, doing checksums to catch errors, and all the messy details of keeping the abstraction clean for the application protocol.
 
 ^When we're lucky, we use web servers and libraries that deal with TCP and everything just works! But then there are other times...
+
+---
+
+![fit](images/packet_routing.png)
+
+^Why it matters? We don't have guarantees about the path a packet takes across a network - I've drawn here two paths across a network that a packet could take. If the blue packet was sent before the red packet, it looks like it could still arrive second because it took a weird path. TCP would reorder them and present them in the order that they were sent.
 
 ---
 
